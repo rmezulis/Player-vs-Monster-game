@@ -56,7 +56,7 @@
       </b-container>
     </b-card>
     <b-card class="mb-2 text-center d-flex">
-      <div class="turns" v-for="turn in turns" :key="turn.message">
+      <div class="turns" v-for="turn in turns" :key="turn.id">
         <ul>
           <li class="turn you" v-if="turn.player === 'you'">{{turn.message}}</li>
           <li class="turn monster" v-if="turn.player === 'monster'">{{turn.message}}</li>
@@ -92,6 +92,7 @@ export default {
       playerHealth: 100,
       monsterHealth: 100,
       turns: [],
+      turnCount: 0,
       gameIsRunning: false
     };
   },
@@ -100,6 +101,7 @@ export default {
       let damage = Math.floor(Math.random() * 5) + 1;
       this.monsterHealth -= damage;
       this.turns.unshift({
+        id: this.turnCount++,
         message: `Player hits monster for ${damage}`,
         player: "you"
       });
@@ -108,6 +110,7 @@ export default {
       let damage = Math.floor(Math.random() * 5) + 6;
       this.playerHealth -= damage;
       this.turns.unshift({
+        id: this.turnCount++,
         message: `Monster hits player for ${damage}`,
         player: "monster"
       });
@@ -116,13 +119,18 @@ export default {
       let damage = Math.floor(Math.random() * 5) + 6;
       this.monsterHealth -= damage;
       this.turns.unshift({
+        id: this.turnCount++,
         message: `Player hits monster hard for ${damage}`,
         player: "you"
       });
     },
     heal() {
       this.playerHealth += 10;
-      this.turns.unshift({ message: "Player heals for 10", player: "you" });
+      this.turns.unshift({
+        id: this.turnCount++,
+        message: "Player heals for 10",
+        player: "you"
+      });
     },
     resetGame(status) {
       this.playerHealth = 100;
