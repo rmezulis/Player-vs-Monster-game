@@ -136,6 +136,7 @@ export default {
       this.playerHealth = 100;
       this.monsterHealth = 100;
       this.turns = [];
+      this.turnCount = 0;
       this.gameIsRunning = status;
     },
     showModal(id) {
